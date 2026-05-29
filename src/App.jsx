@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5050"
+import { Navigate, Route, Routes } from "react-router-dom"
+import ProtectedRoute from "./components/layout/ProtectedRoute"
+import LoginPage from "./pages/LoginPage"
+import SignupPage from "./pages/SignupPage"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
-  const [msg, setMsg] = useState("loading...")
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/api/test`)
-      .then((res) => setMsg(res.data.message))
-      .catch(() => setMsg("could not reach server"))
-  }, [])
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<ProfilePage />} />
+        <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
+      </Route>
 
-  return <h1>{msg}</h1>
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  )
 }
 
 export default App
