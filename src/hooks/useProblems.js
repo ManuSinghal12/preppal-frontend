@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react"
 import { getAllProblems } from "../api/problemApi"
 
-export const useProblems = (filters = {}) => {
+const EMPTY_FILTERS = {}
+
+export const useProblems = (filters = EMPTY_FILTERS) => {
     const [problems, setProblems] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)

@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import ProfilePage from "./pages/ProfilePage"
 import TrackerPage from "./pages/TrackerPage"
+import DashboardPage from "./pages/DashboardPage"
 
 function App() {
   return (
@@ -13,8 +14,8 @@ function App() {
       <Route path="/signup" element={<SignupPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<ProfilePage />} />
-        <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/tracker" element={<TrackerPage />} />
       </Route>
 
