@@ -8,11 +8,19 @@ const NotesPage = () => {
     const [notes, setNotes] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const fetchNotes = () => {
-        setLoading(true)
-        getAllNotes().then(res => setNotes(res.data)).finally(() => setLoading(false))
+    const fetchNotes = async ({ showLoading = false } = {}) => {
+        if (showLoading) setLoading(true)
+        try {
+            const res = await getAllNotes()
+            setNotes(res.data)
+        } finally {
+            setLoading(false)
+        }
     }
-    useEffect(() => { fetchNotes() }, [])
+
+    useEffect(() => {
+        getAllNotes().then(res => setNotes(res.data)).finally(() => setLoading(false))
+    }, [])
 
     const handleDelete = (id) => setNotes(prev => prev.filter(n => n._id !== id))
 
