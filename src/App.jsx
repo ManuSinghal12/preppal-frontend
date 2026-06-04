@@ -1,27 +1,31 @@
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
+import Navbar from "./components/layout/Navbar"
 import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
-import ProfilePage from "./pages/ProfilePage"
-import TrackerPage from "./pages/TrackerPage"
 import DashboardPage from "./pages/DashboardPage"
+import TrackerPage from "./pages/TrackerPage"
+import NotesPage from "./pages/NotesPage"
+import AIPage from "./pages/AIPage"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/tracker" element={<TrackerPage />} />
-      </Route>
-
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/tracker" element={<TrackerPage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/ai" element={<AIPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+      </Routes>
+    </>
   )
 }
-
 export default App

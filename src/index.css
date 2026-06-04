@@ -2,6 +2,8 @@
   --bg: #f6f7fb;
   --panel: #ffffff;
   --panel-soft: #f9fafb;
+  --color-background-primary: var(--panel);
+  --color-background-secondary: var(--panel-soft);
   --text: #111827;
   --muted: #6b7280;
   --border: #d9dde7;
