@@ -42,45 +42,44 @@ const MockInterview = () => {
 
     return (
         <div>
-            <h3 style={{ marginBottom: 16, fontSize: 17 }}>Mock interview</h3>
+            <h3 className="text-lg font-semibold mb-4">Mock interview</h3>
             {!started ? (
                 <div>
-                    <label style={{ fontSize: 12, color: "#888", display: "block", marginBottom: 4 }}>Select topic</label>
+                    <label className="label">Select topic</label>
                     <select value={topic} onChange={e => setTopic(e.target.value)}
-                        style={{ padding: 8, borderRadius: 6, border: "1px solid #ddd", marginBottom: 14, minWidth: 200 }}>
+                        className="input mb-4 min-w-[200px]">
                         {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
                     </select>
-                    <br />
                     <button onClick={start} disabled={loading}
-                        style={{ padding: "8px 20px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #ccc" }}>
+                        className="btn-primary">
                         {loading ? "Starting..." : "Start 5-question round"}
                     </button>
                 </div>
             ) : done ? (
                 <div>
-                    <div style={{ background: "#f0fff4", border: "1px solid #b2f5ea", borderRadius: 8, padding: 16, marginBottom: 16 }}>
-                        <p style={{ margin: "0 0 6px", fontSize: 11, color: "#276749", fontWeight: 600, textTransform: "uppercase" }}>Round complete</p>
-                        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7 }}>{parseMarkdown(feedback)}</p>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                        <p className="text-xs text-green-700 font-semibold uppercase mb-2">Round complete</p>
+                        <p className="text-sm leading-relaxed">{parseMarkdown(feedback)}</p>
                     </div>
-                    <button onClick={restart} style={{ padding: "8px 18px", cursor: "pointer", borderRadius: 6, border: "1px solid #ddd" }}>Start new round</button>
+                    <button onClick={restart} className="btn-secondary">Start new round</button>
                 </div>
             ) : (
                 <div>
-                    <div style={{ background: "#f9f9f9", border: "1px solid #eee", borderRadius: 8, padding: 16, marginBottom: 14 }}>
-                        <p style={{ margin: "0 0 6px", fontSize: 11, color: "#888", fontWeight: 600 }}>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
+                        <p className="text-xs text-slate-600 font-semibold mb-2">
                             QUESTION {qIndex + 1} OF 5 — {topic.toUpperCase()}
                         </p>
-                        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65 }}>{parseMarkdown(question)}</p>
+                        <p className="text-sm leading-relaxed">{parseMarkdown(question)}</p>
                     </div>
                     <textarea value={answer} onChange={e => setAnswer(e.target.value)}
                         placeholder="Type your answer here..."
-                        rows={4} style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ddd", resize: "vertical", marginBottom: 10, fontSize: 14 }} />
-                    <div style={{ display: "flex", gap: 8 }}>
+                        rows={4} className="input mb-4" />
+                    <div className="flex gap-2">
                         <button onClick={submit} disabled={loading || !answer.trim()}
-                            style={{ padding: "8px 20px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #ccc" }}>
+                            className="btn-primary">
                             {loading ? "Submitting..." : qIndex >= 4 ? "Submit final answer" : "Submit answer"}
                         </button>
-                        <button onClick={restart} style={{ padding: "8px 14px", cursor: "pointer", borderRadius: 6, border: "1px solid #eee", color: "#888" }}>Restart</button>
+                        <button onClick={restart} className="btn-secondary">Restart</button>
                     </div>
                 </div>
             )}

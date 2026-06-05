@@ -48,49 +48,49 @@ const NoteQA = () => {
     }
 
     if (notes.length === 0) return (
-        <div style={{ padding: 20, color: "#888", fontSize: 14 }}>
+        <div className="text-slate-400 py-8">
             No notes uploaded yet. Go to the Notes page and upload a PDF or text file first.
         </div>
     )
 
     return (
         <div>
-            <h3 style={{ marginBottom: 16, fontSize: 17 }}>Ask your notes</h3>
-            <div style={{ marginBottom: 12 }}>
-                <label style={{ fontSize: 12, color: "#888", display: "block", marginBottom: 4 }}>Select note</label>
+            <h3 className="text-lg font-semibold mb-4">Ask your notes</h3>
+            <div className="mb-4">
+                <label className="label">Select note</label>
                 <select value={noteId} onChange={e => setNoteId(e.target.value)}
-                    style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ddd" }}>
+                    className="input">
                     {notes.map(n => <option key={n._id} value={n._id}>{n.title} — {n.subject}</option>)}
                 </select>
             </div>
-            <div style={{ marginBottom: 12 }}>
-                <label style={{ fontSize: 12, color: "#888", display: "block", marginBottom: 4 }}>Your question</label>
+            <div className="mb-4">
+                <label className="label">Your question</label>
                 <textarea value={question} onChange={e => setQ(e.target.value)}
                     placeholder="What is a deadlock? Explain normalisation..."
-                    rows={3} style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ddd", resize: "vertical" }} />
+                    rows={3} className="input" />
             </div>
             <button onClick={handleAsk} disabled={loading || !question.trim()}
-                style={{ padding: "8px 20px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #ccc", marginBottom: 16 }}>
+                className="btn-primary mb-4">
                 {loading ? "Thinking..." : "Ask"}
             </button>
-            {error && <p style={{ color: "red", fontSize: 13, marginBottom: 10 }}>{error}</p>}
-            {saveSuccess && <p style={{ color: "green", fontSize: 13, marginBottom: 10 }}>{saveSuccess}</p>}
+            {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
+            {saveSuccess && <p className="text-green-600 text-sm mb-3">{saveSuccess}</p>}
             {answer && (
                 <div>
-                    <div style={{ background: "#f0f7ff", border: "1px solid #cce0ff", borderRadius: 8, padding: 16, marginBottom: 10 }}>
-                        <p style={{ margin: "0 0 6px", fontSize: 11, color: "#0066cc", fontWeight: 600, textTransform: "uppercase" }}>Answer</p>
-                        <p style={{ margin: 0, lineHeight: 1.65, fontSize: 14 }}>{parseMarkdown(answer)}</p>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-3">
+                        <p className="text-xs text-blue-700 font-semibold uppercase mb-2">Answer</p>
+                        <p className="text-sm leading-relaxed">{parseMarkdown(answer)}</p>
                     </div>
                     <button onClick={handleSave} disabled={saving}
-                        style={{ padding: "8px 16px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #333", backgroundColor: "#333", color: "white", marginBottom: 10, fontSize: 13 }}>
+                        className="btn-primary mb-4">
                         {saving ? "Saving..." : "Save Answer"}
                     </button>
                     {chunks.length > 0 && (
-                        <div style={{ background: "#f9f9f9", border: "1px solid #eee", borderRadius: 8, padding: 14 }}>
-                            <p style={{ margin: "0 0 8px", fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase" }}>Source chunks used</p>
+                        <div className="bg-slate-50 border border-slate-200 rounded-lg p-3.5">
+                            <p className="text-xs text-slate-600 font-semibold uppercase mb-2">Source chunks used</p>
                             {chunks.map((c, i) => (
-                                <div key={i} style={{ fontSize: 12, color: "#666", padding: "6px 0", borderBottom: i < chunks.length - 1 ? "1px solid #eee" : "none" }}>
-                                    <span style={{ color: "#bbb", marginRight: 6 }}>{i + 1}.</span>{c.text}...
+                                <div key={i} className="text-xs text-slate-600 py-1.5" style={{ borderBottom: i < chunks.length - 1 ? "1px solid #e2e8f0" : "none" }}>
+                                    <span className="text-slate-400 mr-1">{i + 1}.</span>{c.text}...
                                 </div>
                             ))}
                         </div>

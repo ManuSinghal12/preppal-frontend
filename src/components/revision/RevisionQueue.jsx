@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { getReviseToday, markRevised } from "../../api/problemApi"
+import { useToast } from "../../context/ToastContext"
 
 const RevisionQueue = () => {
+    const { addToast } = useToast()
     const [problems, setProblems] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -15,7 +17,8 @@ const RevisionQueue = () => {
         try {
             await markRevised(id)
             setProblems(prev => prev.filter(p => p._id !== id))
-        } catch { alert("Failed to mark revised") }
+            addToast("Marked as revised!")
+        } catch { addToast("Failed to mark revised", "error") }
     }
 
     if (loading) return <div>Loading revision queue...</div>

@@ -11,11 +11,11 @@ const TrackerPage = () => {
     const { problems, loading, error, refetch } = useProblems(filters)
 
     return (
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 16px" }}>
-            <h2 style={{ marginBottom: 20 }}>DSA Tracker</h2>
+        <div className="page">
+            <h2 className="text-2xl font-bold mb-6">DSA Tracker</h2>
             <AddProblemForm onSuccess={refetch} />
             <FilterBar filters={filters} onChange={setFilters} />
-            {error && <p style={{ color: "red", marginBottom: 12 }}>{error}</p>}
+            {error && <p className="text-red-600 mb-4">{error}</p>}
             <ProblemList
                 problems={problems}
                 loading={loading}

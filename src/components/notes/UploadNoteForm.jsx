@@ -1,7 +1,9 @@
 import { useState, useRef } from "react"
 import { uploadNote } from "../../api/noteApi"
+import { useToast } from "../../context/ToastContext"
 
 const UploadNoteForm = ({ onSuccess }) => {
+    const { addToast } = useToast()
     const [form, setForm] = useState({ title: "", subject: "", tags: "" })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -24,43 +26,45 @@ const UploadNoteForm = ({ onSuccess }) => {
             await uploadNote(fd)
             setForm({ title: "", subject: "", tags: "" })
             if (fileRef.current) fileRef.current.value = ""
-            setStatus(""); onSuccess()
+            setStatus(""); addToast("Note uploaded successfully!"); onSuccess()
         } catch (err) {
-            setError(err.response?.data?.message || "Upload failed")
+            const errMsg = err.response?.data?.message || "Upload failed"
+            setError(errMsg)
+            addToast(errMsg, "error")
             setStatus("")
         } finally { setLoading(false) }
     }
 
     return (
-        <div style={{ background: "var(--color-background-secondary)", border: "1px solid #eee", borderRadius: 8, padding: 20, marginBottom: 24 }}>
-            <h3 style={{ margin: "0 0 14px" }}>Upload notes</h3>
-            {error && <p style={{ color: "red", fontSize: 13, marginBottom: 8 }}>{error}</p>}
-            {status && <p style={{ color: "#666", fontSize: 13, marginBottom: 8 }}>{status}</p>}
+        <div className="card p-6 mb-8">
+            <h3 className="text-lg font-semibold mb-4">Upload notes</h3>
+            {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
+            {status && <p className="text-slate-600 text-sm mb-2">{status}</p>}
             <form onSubmit={handleSubmit}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label style={{ fontSize: 12, color: "#888" }}>Title *</label>
+                        <label className="label">Title *</label>
                         <input name="title" value={form.title} onChange={handleChange} required
-                            style={{ display: "block", width: "100%", padding: 8, marginTop: 3, borderRadius: 6, border: "1px solid #ddd" }} />
+                            className="input" />
                     </div>
                     <div>
-                        <label style={{ fontSize: 12, color: "#888" }}>Subject *</label>
+                        <label className="label">Subject *</label>
                         <input name="subject" value={form.subject} onChange={handleChange} required
-                            style={{ display: "block", width: "100%", padding: 8, marginTop: 3, borderRadius: 6, border: "1px solid #ddd" }} />
+                            className="input" />
                     </div>
                     <div>
-                        <label style={{ fontSize: 12, color: "#888" }}>Tags (comma-separated)</label>
+                        <label className="label">Tags (comma-separated)</label>
                         <input name="tags" value={form.tags} onChange={handleChange} placeholder="DBMS, OS, networks"
-                            style={{ display: "block", width: "100%", padding: 8, marginTop: 3, borderRadius: 6, border: "1px solid #ddd" }} />
+                            className="input" />
                     </div>
                     <div>
-                        <label style={{ fontSize: 12, color: "#888" }}>File (.pdf or .txt) *</label>
+                        <label className="label">File (.pdf or .txt) *</label>
                         <input type="file" accept=".pdf,.txt" ref={fileRef}
-                            style={{ display: "block", width: "100%", padding: 6, marginTop: 3 }} />
+                            className="input" />
                     </div>
                 </div>
                 <button type="submit" disabled={loading}
-                    style={{ marginTop: 14, padding: "8px 20px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #ccc" }}>
+                    className="btn-primary mt-4">
                     {loading ? "Processing..." : "Upload"}
                 </button>
             </form>

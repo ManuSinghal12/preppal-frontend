@@ -1,37 +1,39 @@
 // components/tracker/ProblemRow.jsx
 import { deleteProblem, toggleStar } from "../../api/problemApi"
+import { useToast } from "../../context/ToastContext"
 
 const D_COLORS = { Easy: "#22c55e", Medium: "#f59e0b", Hard: "#ef4444" }
 const S_COLORS = { Solved: "#22c55e", Stuck: "#ef4444", Revise: "#f59e0b", "To Do": "#888" }
 
 const ProblemRow = ({ problem, onEdit, onDelete, onToggleStar }) => {
+    const { addToast } = useToast()
     const handleDelete = async () => {
         if (!window.confirm("Delete this problem?")) return
-        try { await deleteProblem(problem._id); onDelete(problem._id) }
-        catch { alert("Failed to delete") }
+        try { await deleteProblem(problem._id); onDelete(problem._id); addToast("Problem deleted") }
+        catch { addToast("Failed to delete", "error") }
     }
     const handleStar = async () => {
         try { const { data } = await toggleStar(problem._id); onToggleStar(data) }
-        catch { alert("Failed to update star") }
+        catch { addToast("Failed to update star", "error") }
     }
     return (
-        <tr style={{ borderBottom: "1px solid #eee" }}>
-            <td style={{ padding: "10px 8px" }}>
-                <button onClick={handleStar} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 16 }}>
+        <tr className="border-b border-slate-200 hover:bg-slate-50">
+            <td className="px-3 py-2.5">
+                <button onClick={handleStar} className="bg-none border-none cursor-pointer text-lg hover:opacity-80">
                     {problem.isStarred ? "★" : "☆"}
                 </button>
             </td>
-            <td style={{ padding: "10px 8px", fontWeight: 500 }}>{problem.title}</td>
-            <td style={{ padding: "10px 8px", color: "#666", fontSize: 13 }}>{problem.platform}</td>
-            <td style={{ padding: "10px 8px", fontSize: 13 }}>{problem.topic}</td>
-            <td style={{ padding: "10px 8px" }}><span style={{ color: D_COLORS[problem.difficulty] || "#888" }}>{problem.difficulty}</span></td>
-            <td style={{ padding: "10px 8px" }}><span style={{ color: S_COLORS[problem.status] || "#888" }}>{problem.status}</span></td>
-            <td style={{ padding: "10px 8px", color: "#666", fontSize: 12 }}>
+            <td className="px-3 py-2.5 font-medium">{problem.title}</td>
+            <td className="px-3 py-2.5 text-slate-600 text-sm">{problem.platform}</td>
+            <td className="px-3 py-2.5 text-sm">{problem.topic}</td>
+            <td className="px-3 py-2.5"><span style={{ color: D_COLORS[problem.difficulty] || "#888" }}>{problem.difficulty}</span></td>
+            <td className="px-3 py-2.5"><span style={{ color: S_COLORS[problem.status] || "#888" }}>{problem.status}</span></td>
+            <td className="px-3 py-2.5 text-slate-600 text-xs">
                 {problem.dateSolved ? new Date(problem.dateSolved).toLocaleDateString() : "—"}
             </td>
-            <td style={{ padding: "10px 8px" }}>
-                <button onClick={() => onEdit(problem)} style={{ marginRight: 6, padding: "3px 10px", cursor: "pointer", borderRadius: 4, border: "1px solid #ddd" }}>Edit</button>
-                <button onClick={handleDelete} style={{ padding: "3px 10px", cursor: "pointer", borderRadius: 4, border: "1px solid #fcc", color: "#c33" }}>Delete</button>
+            <td className="px-3 py-2.5 flex gap-1.5">
+                <button onClick={() => onEdit(problem)} className="btn-secondary px-2 py-1 text-xs">Edit</button>
+                <button onClick={handleDelete} className="btn-danger">Delete</button>
             </td>
         </tr>
     )

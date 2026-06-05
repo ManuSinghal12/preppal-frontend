@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { getProfile, updateProfile } from "../api/authAPI"
-import { useAuth } from "../context/useAuth"
+import { useAuth } from "../context/AuthContext"
 
 const emptyForm = {
   name: "",
@@ -88,68 +88,66 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <main className="page-shell">
-        <section className="profile-panel">
-          <p className="muted">Loading profile...</p>
-        </section>
-      </main>
+      <div className="page max-w-2xl">
+        <p className="text-slate-500">Loading profile...</p>
+      </div>
     )
   }
 
   return (
-    <main className="page-shell">
-      <section className="profile-panel" aria-labelledby="profile-title">
-        <header className="profile-header">
+    <div className="page max-w-2xl">
+      <div className="card p-8" aria-labelledby="profile-title">
+        <header className="flex justify-between items-start mb-8">
           <div>
-            <p className="eyebrow">PrepPal</p>
-            <h1 id="profile-title">Your Profile</h1>
-            <p className="muted">
+            <p className="text-xs text-slate-500 font-semibold uppercase mb-2">PrepPal</p>
+            <h1 id="profile-title" className="text-3xl font-bold text-slate-900 mb-1">Your Profile</h1>
+            <p className="text-sm text-slate-500">
               {currentUser?.email || profile?.email || "Manage your preparation profile"}
             </p>
           </div>
-          <button className="secondary-button" type="button" onClick={handleLogout}>
+          <button className="btn-secondary px-4 py-2 text-sm" type="button" onClick={handleLogout}>
             Log out
           </button>
         </header>
 
-        {message && <p className="alert alert-success">{message}</p>}
-        {error && <p className="alert alert-error">{error}</p>}
+        {message && <p className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm mb-6">{message}</p>}
+        {error && <p className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm mb-6">{error}</p>}
 
         {!profile ? (
-          <p className="muted">No profile data available.</p>
+          <p className="text-slate-500">No profile data available.</p>
         ) : !editing ? (
-          <div className="profile-content">
-            <div className="profile-grid">
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div>
-                <span>Name</span>
-                <strong>{profile.name}</strong>
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Name</p>
+                <p className="text-lg font-semibold text-slate-900">{profile.name}</p>
               </div>
               <div>
-                <span>Email</span>
-                <strong>{profile.email}</strong>
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Email</p>
+                <p className="text-lg font-semibold text-slate-900">{profile.email}</p>
               </div>
               <div>
-                <span>Branch</span>
-                <strong>{profile.branch || "Not added"}</strong>
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Branch</p>
+                <p className="text-lg font-semibold text-slate-900">{profile.branch || "Not added"}</p>
               </div>
               <div>
-                <span>Role</span>
-                <strong>{profile.role}</strong>
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Role</p>
+                <p className="text-lg font-semibold text-slate-900">{profile.role}</p>
               </div>
-              <div>
-                <span>Target companies</span>
-                <strong>
+              <div className="md:col-span-2">
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Target companies</p>
+                <p className="text-lg font-semibold text-slate-900">
                   {(profile.targetCompanies || []).join(", ") || "Not added"}
-                </strong>
+                </p>
               </div>
-              <div>
-                <span>Goals</span>
-                <strong>{profile.goals || "Not added"}</strong>
+              <div className="md:col-span-2">
+                <p className="text-xs text-slate-500 font-semibold uppercase mb-2">Goals</p>
+                <p className="text-lg font-semibold text-slate-900">{profile.goals || "Not added"}</p>
               </div>
             </div>
 
             <button
-              className="primary-button fit-button"
+              className="btn-primary"
               type="button"
               onClick={() => setEditing(true)}
             >
@@ -157,58 +155,61 @@ const ProfilePage = () => {
             </button>
           </div>
         ) : (
-          <form className="form-stack" onSubmit={handleSave}>
-            <label className="field">
-              <span>Name</span>
-              <input name="name" value={form.name} onChange={handleChange} required />
-            </label>
+          <form className="space-y-5" onSubmit={handleSave}>
+            <div>
+              <label className="label">Name</label>
+              <input className="input" name="name" value={form.name} onChange={handleChange} required />
+            </div>
 
-            <label className="field">
-              <span>Branch</span>
+            <div>
+              <label className="label">Branch</label>
               <input
+                className="input"
                 name="branch"
                 value={form.branch}
                 onChange={handleChange}
                 placeholder="Computer Science"
               />
-            </label>
+            </div>
 
-            <label className="field">
-              <span>Target companies</span>
+            <div>
+              <label className="label">Target companies</label>
               <input
+                className="input"
                 name="targetCompanies"
                 value={form.targetCompanies}
                 onChange={handleChange}
                 placeholder="Google, Microsoft, Amazon"
               />
-            </label>
+            </div>
 
-            <label className="field">
-              <span>Goals</span>
+            <div>
+              <label className="label">Goals</label>
               <textarea
+                className="input"
                 name="goals"
                 value={form.goals}
                 onChange={handleChange}
                 placeholder="What are you working toward?"
                 rows={4}
               />
-            </label>
+            </div>
 
-            <label className="field">
-              <span>Role</span>
-              <select name="role" value={form.role} onChange={handleChange}>
+            <div>
+              <label className="label">Role</label>
+              <select className="input" name="role" value={form.role} onChange={handleChange}>
                 <option value="SDE">SDE</option>
                 <option value="ML">ML</option>
                 <option value="Core">Core</option>
               </select>
-            </label>
+            </div>
 
-            <div className="button-row">
-              <button className="primary-button" type="submit" disabled={saving}>
+            <div className="flex gap-3 pt-4">
+              <button className="btn-primary" type="submit" disabled={saving}>
                 {saving ? "Saving..." : "Save"}
               </button>
               <button
-                className="secondary-button"
+                className="btn-secondary"
                 type="button"
                 onClick={() => setEditing(false)}
               >
@@ -217,8 +218,8 @@ const ProfilePage = () => {
             </div>
           </form>
         )}
-      </section>
-    </main>
+      </div>
+    </div>
   )
 }
 

@@ -26,29 +26,29 @@ const QuestionGenerator = () => {
 
     return (
         <div>
-            <h3 style={{ marginBottom: 16, fontSize: 17 }}>Generate interview questions</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 14 }}>
+            <h3 className="text-lg font-semibold mb-4">Generate interview questions</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 {[["topic", TOPICS], ["difficulty", DIFFS], ["type", TYPES]].map(([name, opts]) => (
                     <div key={name}>
-                        <label style={{ fontSize: 12, color: "#888", textTransform: "capitalize", display: "block", marginBottom: 4 }}>{name}</label>
+                        <label className="label capitalize">{name}</label>
                         <select name={name} value={form[name]} onChange={handleChange}
-                            style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ddd" }}>
+                            className="input">
                             {opts.map(o => <option key={o} value={o}>{o}</option>)}
                         </select>
                     </div>
                 ))}
             </div>
             <button onClick={handleGenerate} disabled={loading}
-                style={{ padding: "8px 20px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #ccc", marginBottom: 16 }}>
+                className="btn-primary mb-4">
                 {loading ? "Generating..." : "Generate 5 questions"}
             </button>
-            {error && <p style={{ color: "red", fontSize: 13 }}>{error}</p>}
+            {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
             {questions && (
-                <div style={{ background: "#f9f9f9", border: "1px solid #eee", borderRadius: 8, padding: 16 }}>
-                    <p style={{ margin: "0 0 10px", fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase" }}>
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                    <p className="text-xs text-slate-600 font-semibold uppercase mb-3">
                         {form.difficulty} {form.type} — {form.topic}
                     </p>
-                    <div style={{ fontSize: 14, lineHeight: 1.85, color: "#333" }}>{parseMarkdown(questions)}</div>
+                    <div className="text-sm leading-relaxed text-slate-900">{parseMarkdown(questions)}</div>
                 </div>
             )}
         </div>

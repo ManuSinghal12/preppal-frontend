@@ -16,35 +16,35 @@ const DashboardPage = () => {
         starred: problems.filter(p => p.isStarred).length
     }
 
-    if (loading) return <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading dashboard...</div>
+    if (loading) return <div className="flex items-center justify-center py-16 text-slate-400">Loading dashboard...</div>
 
     return (
-        <div style={{ maxWidth: 1000, margin: "0 auto", padding: "24px 16px" }}>
-            <h2 style={{ marginBottom: 24 }}>Dashboard</h2>
+        <div className="page">
+            <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
 
-            {error && <p style={{ color: "#991b1b", background: "#fef2f2", padding: 12, borderRadius: 8, marginBottom: 16 }}>{error}</p>}
+            {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">{error}</div>}
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 28 }}>
+            <div className="flex gap-4 flex-wrap mb-8">
                 <StatCard label="Total problems" value={stats.total} />
                 <StatCard label="Solved" value={stats.solved} color="#22c55e" />
                 <StatCard label="Backlog" value={stats.backlog} color="#f59e0b" />
                 <StatCard label="Starred" value={stats.starred} color="#f59e0b" />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
-                <div style={{ background: "var(--color-background-primary)", border: "1px solid #eee", borderRadius: 10, padding: 20 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="card p-6">
                     <TopicBarChart problems={problems} />
                 </div>
-                <div style={{ background: "var(--color-background-primary)", border: "1px solid #eee", borderRadius: 10, padding: 20 }}>
+                <div className="card p-6">
                     <DifficultyPieChart problems={problems} />
                 </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                <div style={{ background: "var(--color-background-primary)", border: "1px solid #eee", borderRadius: 10, padding: 20 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="card p-6">
                     <WeakTopics problems={problems} />
                 </div>
-                <div style={{ background: "var(--color-background-primary)", border: "1px solid #eee", borderRadius: 10, padding: 20 }}>
+                <div className="card p-6">
                     <RevisionQueue />
                 </div>
             </div>

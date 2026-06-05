@@ -25,11 +25,11 @@ const NotesPage = () => {
     const handleDelete = (id) => setNotes(prev => prev.filter(n => n._id !== id))
 
     return (
-        <div style={{ maxWidth: 800, margin: "0 auto", padding: "24px 16px" }}>
-            <h2 style={{ marginBottom: 20 }}>Notes</h2>
+        <div className="page max-w-2xl">
+            <h2 className="text-2xl font-bold mb-6">Notes</h2>
             <UploadNoteForm onSuccess={fetchNotes} />
             {loading ? (
-                <div style={{ textAlign: "center", color: "#888", padding: 20 }}>Loading notes...</div>
+                <div className="text-center text-slate-400 py-8">Loading notes...</div>
             ) : notes.length === 0 ? (
                 <EmptyState message="No notes yet. Upload a PDF or text file above." />
             ) : (
