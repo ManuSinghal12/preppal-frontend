@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { generateQuestions } from "../../api/aiAPI"
+import { parseMarkdown } from "../../utils/parseMarkdown"
 
 const TOPICS = ["Arrays", "Strings", "Linked List", "Trees", "Graphs", "DP", "Recursion", "OS", "DBMS", "CN", "OOPs", "System Design", "Other"]
 const DIFFS = ["Beginner", "Intermediate", "Advanced"]
@@ -47,7 +48,7 @@ const QuestionGenerator = () => {
                     <p style={{ margin: "0 0 10px", fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase" }}>
                         {form.difficulty} {form.type} — {form.topic}
                     </p>
-                    <div style={{ fontSize: 14, lineHeight: 1.85, whiteSpace: "pre-wrap", color: "#333" }}>{questions}</div>
+                    <div style={{ fontSize: 14, lineHeight: 1.85, color: "#333" }}>{parseMarkdown(questions)}</div>
                 </div>
             )}
         </div>

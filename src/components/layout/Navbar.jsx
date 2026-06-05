@@ -6,6 +6,7 @@ const LINKS = [
     { to: "/tracker", label: "Tracker" },
     { to: "/notes", label: "Notes" },
     { to: "/ai", label: "AI" },
+    { to: "/saved", label: "Saved" },
     { to: "/profile", label: "Profile" }
 ]
 

@@ -1,3 +1,4 @@
+// Final App.jsx — replace entirely
 import { Routes, Route, Navigate } from "react-router-dom"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
 import Navbar from "./components/layout/Navbar"
@@ -8,6 +9,7 @@ import TrackerPage from "./pages/TrackerPage"
 import NotesPage from "./pages/NotesPage"
 import AIPage from "./pages/AIPage"
 import ProfilePage from "./pages/ProfilePage"
+import SavedAnswerPage from "./pages/SavedAnswerPage"
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           <Route path="/tracker" element={<TrackerPage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/ai" element={<AIPage />} />
+          <Route path="/saved" element={<SavedAnswerPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />

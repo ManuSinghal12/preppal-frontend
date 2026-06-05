@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { getAllNotes } from "../../api/noteApi"
 import { askNote } from "../../api/aiAPI"
+import { saveAnswer } from "../../api/savedAnswerApi"
+import { parseMarkdown } from "../../utils/parseMarkdown"
 
 const NoteQA = () => {
     const [notes, setNotes] = useState([])
@@ -10,6 +12,8 @@ const NoteQA = () => {
     const [chunks, setChunks] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [saving, setSaving] = useState(false)
+    const [saveSuccess, setSaveSuccess] = useState("")
 
     useEffect(() => {
         getAllNotes().then(res => {
@@ -28,6 +32,19 @@ const NoteQA = () => {
         } catch (err) {
             setError(err.response?.data?.message || "Failed to get answer")
         } finally { setLoading(false) }
+    }
+
+    const handleSave = async () => {
+        if (!answer || !question) return
+        setSaving(true); setSaveSuccess("")
+        try {
+            const noteTitle = notes.find(n => n._id === noteId)?.title || "Unknown"
+            await saveAnswer({ question, answer, noteId, noteTitle })
+            setSaveSuccess("Answer saved! ✓")
+            setTimeout(() => setSaveSuccess(""), 3000)
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to save answer")
+        } finally { setSaving(false) }
     }
 
     if (notes.length === 0) return (
@@ -57,12 +74,17 @@ const NoteQA = () => {
                 {loading ? "Thinking..." : "Ask"}
             </button>
             {error && <p style={{ color: "red", fontSize: 13, marginBottom: 10 }}>{error}</p>}
+            {saveSuccess && <p style={{ color: "green", fontSize: 13, marginBottom: 10 }}>{saveSuccess}</p>}
             {answer && (
                 <div>
                     <div style={{ background: "#f0f7ff", border: "1px solid #cce0ff", borderRadius: 8, padding: 16, marginBottom: 10 }}>
                         <p style={{ margin: "0 0 6px", fontSize: 11, color: "#0066cc", fontWeight: 600, textTransform: "uppercase" }}>Answer</p>
-                        <p style={{ margin: 0, lineHeight: 1.65, fontSize: 14, whiteSpace: "pre-wrap" }}>{answer}</p>
+                        <p style={{ margin: 0, lineHeight: 1.65, fontSize: 14 }}>{parseMarkdown(answer)}</p>
                     </div>
+                    <button onClick={handleSave} disabled={saving}
+                        style={{ padding: "8px 16px", cursor: "pointer", fontWeight: 500, borderRadius: 6, border: "1px solid #333", backgroundColor: "#333", color: "white", marginBottom: 10, fontSize: 13 }}>
+                        {saving ? "Saving..." : "Save Answer"}
+                    </button>
                     {chunks.length > 0 && (
                         <div style={{ background: "#f9f9f9", border: "1px solid #eee", borderRadius: 8, padding: 14 }}>
                             <p style={{ margin: "0 0 8px", fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase" }}>Source chunks used</p>
