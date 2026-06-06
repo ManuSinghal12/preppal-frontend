@@ -39,7 +39,7 @@ const SignupPage = () => {
             <div>
               <label className="label">Full name</label>
               <input name="name" value={form.name} onChange={handleChange}
-                className="input" placeholder="Manu Singhal" required />
+                className="input" placeholder="Your Name" required />
             </div>
             <div>
               <label className="label">Email address</label>
