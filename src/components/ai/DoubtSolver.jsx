@@ -43,7 +43,7 @@ const DoubtSolver = () => {
             </button>
             {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
             {explanation && (
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                <div className="bg-white border border-purple-200 rounded-lg p-4 shadow-sm">
                     <p className="text-xs text-purple-700 font-semibold uppercase mb-2">Explanation</p>
                     <p className="text-sm leading-relaxed">{parseMarkdown(explanation)}</p>
                 </div>

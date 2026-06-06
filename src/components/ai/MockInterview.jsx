@@ -57,7 +57,7 @@ const MockInterview = () => {
                 </div>
             ) : done ? (
                 <div>
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                    <div className="bg-white border border-green-200 rounded-lg p-4 mb-4 shadow-sm">
                         <p className="text-xs text-green-700 font-semibold uppercase mb-2">Round complete</p>
                         <p className="text-sm leading-relaxed">{parseMarkdown(feedback)}</p>
                     </div>
@@ -65,7 +65,7 @@ const MockInterview = () => {
                 </div>
             ) : (
                 <div>
-                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
+                    <div className="bg-white border border-slate-200 rounded-lg p-4 mb-4 shadow-sm">
                         <p className="text-xs text-slate-600 font-semibold mb-2">
                             QUESTION {qIndex + 1} OF 5 — {topic.toUpperCase()}
                         </p>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { getPrepSummary } from "../../api/aiApi"
 import { parseMarkdown } from "../../utils/parseMarkdown"
 
@@ -17,6 +17,11 @@ const PrepSummary = () => {
         } finally { setLoading(false) }
     }
 
+    // Auto-fetch summary when the component mounts
+    useEffect(() => {
+        handleFetch()
+    }, [])
+
     return (
         <div>
             <h3 className="text-lg font-semibold mb-2">Your prep summary</h3>
@@ -30,7 +35,7 @@ const PrepSummary = () => {
             {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
             {data && (
                 <div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <div className="bg-white border border-blue-200 rounded-lg p-4 mb-4 shadow-sm">
                         <p className="text-xs text-blue-700 font-semibold uppercase mb-2">AI Coaching</p>
                         <p className="text-sm leading-relaxed">{parseMarkdown(data.summary)}</p>
                     </div>
