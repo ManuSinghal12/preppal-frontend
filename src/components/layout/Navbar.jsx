@@ -36,7 +36,7 @@ const Navbar = () => {
                         <User size={15} />
                         <span className="font-medium">{currentUser.name?.split(" ")[0]}</span>
                     </Link>
-                    <button onClick={() => { logout(); navigate("/login") }}
+                    <button onClick={() => { logout(); navigate("/") }}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors">
                         <LogOut size={15} />
                     </button>

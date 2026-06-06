@@ -2,6 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
 import Navbar from "./components/layout/Navbar"
+import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import DashboardPage from "./pages/DashboardPage"
@@ -16,6 +17,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<ProtectedRoute />}>
@@ -26,7 +28,6 @@ function App() {
           <Route path="/saved" element={<SavedAnswerPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
     </>
   )

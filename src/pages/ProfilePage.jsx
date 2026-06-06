@@ -83,7 +83,7 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     logout()
-    navigate("/login")
+    navigate("/")
   }
 
   if (loading) {
