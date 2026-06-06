@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getProfile, updateProfile } from "../api/authAPI"
+import { getProfile, updateProfile } from "../api/authApi"
 import { useAuth } from "../context/AuthContext"
 
 const emptyForm = {

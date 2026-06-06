@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { generateQuestions } from "../../api/aiAPI"
+import { generateQuestions } from "../../api/aiApi"
 import { parseMarkdown } from "../../utils/parseMarkdown"
 
 const TOPICS = ["Arrays", "Strings", "Linked List", "Trees", "Graphs", "DP", "Recursion", "OS", "DBMS", "CN", "OOPs", "System Design", "Other"]

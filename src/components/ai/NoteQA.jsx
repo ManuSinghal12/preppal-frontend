@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { getAllNotes } from "../../api/noteApi"
-import { askNote } from "../../api/aiAPI"
+import { askNote } from "../../api/aiApi"
 import { saveAnswer } from "../../api/savedAnswerApi"
 import { parseMarkdown } from "../../utils/parseMarkdown"
 
