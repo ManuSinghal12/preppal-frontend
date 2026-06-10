@@ -1,4 +1,3 @@
-// pages/AIPage.jsx — replace entirely
 import { useState } from "react"
 import NoteQA from "../components/ai/NoteQA"
 import QuestionGenerator from "../components/ai/QuestionGenerator"
@@ -24,8 +23,8 @@ const AIPage = () => {
                 {TABS.map(({ label }, i) => (
                     <button key={label} onClick={() => setActive(i)}
                         className={`px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${active === i
-                                ? 'border-brand-600 text-brand-600'
-                                : 'border-transparent text-slate-600 hover:text-slate-900'
+                            ? 'border-brand-600 text-brand-600'
+                            : 'border-transparent text-slate-600 hover:text-slate-900'
                             }`}>
                         {label}
                     </button>
