@@ -5,7 +5,7 @@ import { useToast } from "../../context/ToastContext"
 const TOPICS = ["Arrays", "Strings", "Linked List", "Stack-Queue", "Trees", "Graphs", "DP", "Recursion", "Sorting", "Binary Search", "Greedy", "Heap", "Other"]
 const PLATS = ["LeetCode", "GFG", "HackerRank", "CodeForces", "Other"]
 const DIFFS = ["Easy", "Medium", "Hard"]
-const STATS = ["To Do", "Solved", "Stuck", "Revise"]
+const STATS = ["To Do", "Solved", "Stuck"]
 const EMPTY = { title: "", platform: "LeetCode", topic: "Arrays", difficulty: "Medium", status: "To Do", notes: "", dateSolved: "" }
 
 const AddProblemForm = ({ onSuccess }) => {

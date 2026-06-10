@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { getReviseToday, markRevised } from "../../api/problemApi"
 import { useToast } from "../../context/ToastContext"
 
-const RevisionQueue = () => {
+const RevisionQueue = ({ onRefresh }) => {
     const { addToast } = useToast()
     const [problems, setProblems] = useState([])
     const [loading, setLoading] = useState(true)
@@ -17,7 +17,8 @@ const RevisionQueue = () => {
         try {
             await markRevised(id)
             setProblems(prev => prev.filter(p => p._id !== id))
-            addToast("Marked as revised!")
+            addToast("Marked as revised!");
+            if (onRefresh) onRefresh();
         } catch { addToast("Failed to mark revised", "error") }
     }
 

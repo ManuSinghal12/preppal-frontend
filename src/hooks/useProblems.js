@@ -21,8 +21,6 @@ export const useProblems = (filters = EMPTY_FILTERS) => {
         }
     }, [filters])
 
-    // Fetching remote data on filter changes is the intended synchronization here.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { fetchProblems() }, [fetchProblems])
 
     return { problems, loading, error, refetch: fetchProblems }

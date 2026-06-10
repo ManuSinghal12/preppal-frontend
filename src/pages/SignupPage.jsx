@@ -5,7 +5,11 @@ import { signup as signupApi } from "../api/authApi"
 import { useAuth } from "../context/AuthContext"
 
 const SignupPage = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "SDE" })
+  const [form, setForm] = useState({
+    name: "", email: "", password: "", role: "SDE", branch: "",
+    targetCompanies: "",
+    goals: ""
+  })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
@@ -58,6 +62,39 @@ const SignupPage = () => {
                 <option value="ML">Machine Learning / AI</option>
                 <option value="Core">Core Engineering</option>
               </select>
+            </div>
+            <div>
+              <label className="label">Branch</label>
+              <input
+                name="branch"
+                value={form.branch}
+                onChange={handleChange}
+                className="input"
+                placeholder="CSE, ECE, Mechanical..."
+                required
+              />
+            </div>
+            <div>
+              <label className="label">Target Companies</label>
+              <input
+                name="targetCompanies"
+                value={form.targetCompanies}
+                onChange={handleChange}
+                className="input"
+                placeholder="Google, Amazon, Microsoft..."
+                required
+              />
+            </div>
+            <div>
+              <label className="label">Goals</label>
+              <textarea
+                name="goals"
+                value={form.goals}
+                onChange={handleChange}
+                className="input min-h-24"
+                placeholder="Crack a product-based company, improve DSA..."
+                required
+              />
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full flex justify-center">
               {loading ? "Creating account..." : "Create account"}

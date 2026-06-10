@@ -6,7 +6,7 @@ import Modal from "../ui/Modal"
 const TOPICS = ["Arrays", "Strings", "Linked List", "Stack-Queue", "Trees", "Graphs", "DP", "Recursion", "Sorting", "Binary Search", "Greedy", "Heap", "Other"]
 const PLATS = ["LeetCode", "GFG", "HackerRank", "CodeForces", "Other"]
 const DIFFS = ["Easy", "Medium", "Hard"]
-const STATS = ["To Do", "Solved", "Stuck", "Revise"]
+const STATS = ["To Do", "Solved", "Stuck"]
 
 const EditProblemModal = ({ problem, onClose, onSave }) => {
     const { addToast } = useToast()
@@ -38,34 +38,38 @@ const EditProblemModal = ({ problem, onClose, onSave }) => {
 
     return (
         <Modal onClose={onClose}>
-            <h3 className="text-lg font-semibold mb-4">Edit problem</h3>
-            {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2">
-                    <label className="label">Title</label>
-                    <input name="title" value={form.title} onChange={handleChange}
-                        className="input" />
-                </div>
-                {[["platform", PLATS], ["topic", TOPICS], ["difficulty", DIFFS], ["status", STATS]].map(([name, opts]) => (
-                    <div key={name}>
-                        <label className="label capitalize">{name}</label>
-                        <select name={name} value={form[name]} onChange={handleChange}
-                            className="input">
-                            {opts.map(o => <option key={o} value={o}>{o}</option>)}
-                        </select>
+            <div className="sm:max-w-xl w-full">
+                <h3 className="text-xl font-bold text-slate-800 mb-6">Edit Problem Details</h3>
+                {error && <p className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 border border-red-100">{error}</p>}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="md:col-span-2">
+                        <label className="label text-slate-700 font-medium">Problem Title</label>
+                        <input name="title" value={form.title} onChange={handleChange}
+                            className="input w-full mt-1 focus:ring-2 focus:ring-brand-500" />
                     </div>
-                ))}
-                <div className="md:col-span-2">
-                    <label className="label">Notes</label>
-                    <textarea name="notes" value={form.notes} onChange={handleChange} rows={2}
-                        className="input" />
+                    {[["platform", PLATS], ["topic", TOPICS], ["difficulty", DIFFS], ["status", STATS]].map(([name, opts]) => (
+                        <div key={name}>
+                            <label className="label capitalize text-slate-700 font-medium">{name}</label>
+                            <select name={name} value={form[name]} onChange={handleChange}
+                                className="input w-full mt-1 focus:ring-2 focus:ring-brand-500">
+                                {opts.map(o => <option key={o} value={o}>{o}</option>)}
+                            </select>
+                        </div>
+                    ))}
+                    <div className="md:col-span-2">
+                        <label className="label text-slate-700 font-medium">Personal Notes</label>
+                        <textarea name="notes" value={form.notes} onChange={handleChange} rows={3}
+                            className="input w-full mt-1 focus:ring-2 focus:ring-brand-500" placeholder="Approach, edge cases, or optimizations..." />
+                    </div>
                 </div>
-            </div>
-            <div className="mt-6 flex gap-2">
-                <button onClick={handleSave} disabled={loading} className="btn-primary">
-                    {loading ? "Saving..." : "Save changes"}
-                </button>
-                <button onClick={onClose} className="btn-secondary">Cancel</button>
+
+                <div className="mt-8 flex items-center justify-end gap-3 border-t pt-6 border-slate-100">
+                    <button onClick={onClose} className="btn-secondary px-6">Cancel</button>
+                    <button onClick={handleSave} disabled={loading} className="btn-primary px-8 min-w-[120px]">
+                        {loading ? "Updating..." : "Save Changes"}
+                    </button>
+                </div>
             </div>
         </Modal>
     )

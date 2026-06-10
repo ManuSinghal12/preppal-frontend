@@ -6,13 +6,15 @@ import WeakTopics from "../components/dashboard/WeakTopics"
 import RevisionQueue from "../components/revision/RevisionQueue"
 
 const DashboardPage = () => {
-    const { problems, loading, error } = useProblems()
+    const { problems, loading, error, refetch } = useProblems()
 
     const today = new Date(); today.setHours(23, 59, 59, 999)
     const stats = {
         total: problems.length,
         solved: problems.filter(p => p.status === "Solved").length,
-        backlog: problems.filter(p => p.nextRevisionDate && new Date(p.nextRevisionDate) <= today).length,
+        backlog: problems.filter(p =>
+            p.status === "Stuck" || (p.nextRevisionDate && new Date(p.nextRevisionDate) <= today)
+        ).length,
         starred: problems.filter(p => p.isStarred).length
     }
 
@@ -45,7 +47,7 @@ const DashboardPage = () => {
                     <WeakTopics problems={problems} />
                 </div>
                 <div className="card p-6">
-                    <RevisionQueue />
+                    <RevisionQueue onRefresh={refetch} />
                 </div>
             </div>
         </div>

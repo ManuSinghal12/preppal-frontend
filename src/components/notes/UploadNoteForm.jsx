@@ -1,16 +1,27 @@
-import { useState, useRef } from "react"
+import { useState, useRef } from "react";
+import { FileText, Upload } from "lucide-react";
 import { uploadNote } from "../../api/noteApi"
 import { useToast } from "../../context/ToastContext"
 
 const UploadNoteForm = ({ onSuccess }) => {
     const { addToast } = useToast()
     const [form, setForm] = useState({ title: "", subject: "", tags: "" })
+    const [selectedFileName, setSelectedFileName] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [status, setStatus] = useState("")
     const fileRef = useRef(null)
 
     const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFileName(file.name);
+        } else {
+            setSelectedFileName("");
+        }
+    };
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -25,6 +36,7 @@ const UploadNoteForm = ({ onSuccess }) => {
         try {
             await uploadNote(fd)
             setForm({ title: "", subject: "", tags: "" })
+            setSelectedFileName("")
             if (fileRef.current) fileRef.current.value = ""
             setStatus(""); addToast("Note uploaded successfully!"); onSuccess()
         } catch (err) {
@@ -57,10 +69,25 @@ const UploadNoteForm = ({ onSuccess }) => {
                         <input name="tags" value={form.tags} onChange={handleChange} placeholder="DBMS, OS, networks"
                             className="input" />
                     </div>
-                    <div>
+                    <div className="md:col-span-2">
                         <label className="label">File (.pdf or .txt) *</label>
-                        <input type="file" accept=".pdf,.txt" ref={fileRef}
-                            className="input" />
+                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl hover:border-brand-500 hover:bg-slate-50 transition-colors group cursor-pointer relative">
+                            <div className="space-y-1 text-center">
+                                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-brand-50 text-brand-600 mb-2 group-hover:scale-110 transition-transform">
+                                    {selectedFileName ? <FileText size={24} /> : <Upload size={24} />}
+                                </div>
+                                <div className="flex text-sm text-slate-600">
+                                    <span className="relative rounded-md font-medium text-brand-600">
+                                        {selectedFileName || "Click to upload or drag and drop"}
+                                    </span>
+                                </div>
+                                <p className="text-xs text-slate-500">
+                                    PDF or TXT up to 10MB
+                                </p>
+                            </div>
+                            <input type="file" accept=".pdf,.txt" ref={fileRef} onChange={handleFileChange}
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                        </div>
                     </div>
                 </div>
                 <button type="submit" disabled={loading}

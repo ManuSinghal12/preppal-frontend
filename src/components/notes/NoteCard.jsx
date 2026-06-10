@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react"
 import { deleteNote } from "../../api/noteApi"
 import { useToast } from "../../context/ToastContext"
 
@@ -10,6 +11,20 @@ const NoteCard = ({ note, onDelete }) => {
         try { await deleteNote(note._id); onDelete(note._id); addToast("Note deleted") }
         catch { addToast("Failed to delete note", "error") }
     }
+
+    const handleView = () => {
+        if (!note.filePath) {
+            addToast("File link unavailable. This note might have been uploaded before the view feature was enabled.", "error");
+            return;
+        }
+
+
+        const fileName = note.filePath.split(/[/\\]/).pop();
+        const fileUrl = `http://localhost:5050/uploads/${fileName}`;
+
+        window.open(fileUrl, "_blank", "noopener,noreferrer")
+    }
+
     return (
         <div className="card p-4 mb-3">
             <div className="flex justify-between items-start">
@@ -28,8 +43,14 @@ const NoteCard = ({ note, onDelete }) => {
                         {chunkCount === undefined ? "Chunk count unavailable" : `${chunkCount} chunks`}
                     </p>
                     <p className="text-xs text-slate-500 mb-3">{new Date(note.createdAt).toLocaleDateString()}</p>
-                    <button onClick={handleDelete}
-                        className="btn-danger text-xs">Delete</button>
+                    <div className="flex gap-2 justify-end">
+                        <button onClick={handleView}
+                            className="btn-secondary text-xs flex items-center gap-1">
+                            <ExternalLink size={12} /> Open
+                        </button>
+                        <button onClick={handleDelete}
+                            className="btn-danger text-xs">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>

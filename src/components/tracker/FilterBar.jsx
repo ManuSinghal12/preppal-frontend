@@ -1,7 +1,6 @@
-// components/tracker/FilterBar.jsx
 const TOPICS = ["", "Arrays", "Strings", "Linked List", "Stack-Queue", "Trees", "Graphs", "DP", "Recursion", "Sorting", "Binary Search", "Greedy", "Heap", "Other"]
 const DIFFS = ["", "Easy", "Medium", "Hard"]
-const STATS = ["", "Solved", "Stuck", "Revise", "To Do"]
+const STATS = ["", "Solved", "Stuck", "To Do"]
 const PLATS = ["", "LeetCode", "GFG", "HackerRank", "CodeForces", "Other"]
 
 const FilterBar = ({ filters, onChange }) => {
@@ -14,7 +13,7 @@ const FilterBar = ({ filters, onChange }) => {
                 onChange={e => set("search", e.target.value)}
                 className="input min-w-[180px]"
             />
-            {[["topics", TOPICS], ["difficulties", DIFFS], ["statuses", STATS], ["platforms", PLATS]].map(([key, opts]) => (
+            {[["topic", TOPICS], ["difficulty", DIFFS], ["status", STATS], ["platform", PLATS]].map(([key, opts]) => (
                 <select key={key} value={filters[key] || ""} onChange={e => set(key, e.target.value)}
                     className="input px-3 py-2">
                     {opts.map(o => <option key={o} value={o}>{o || `All ${key}`}</option>)}

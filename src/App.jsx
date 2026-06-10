@@ -1,4 +1,3 @@
-// Final App.jsx — replace entirely
 import { Routes, Route, Navigate } from "react-router-dom"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
 import Navbar from "./components/layout/Navbar"
