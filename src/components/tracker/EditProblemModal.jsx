@@ -44,13 +44,13 @@ const EditProblemModal = ({ problem, onClose, onSave }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="md:col-span-2">
-                        <label className="label text-slate-700 font-medium">Problem Title</label>
+                        <label className="inline-block px-3 py-1 bg-slate-100 border-l-4 border-brand-500 text-sm font-black text-slate-900 mb-2 uppercase tracking-wide">Problem Title</label>
                         <input name="title" value={form.title} onChange={handleChange}
                             className="input w-full mt-1 focus:ring-2 focus:ring-brand-500" />
                     </div>
                     {[["platform", PLATS], ["topic", TOPICS], ["difficulty", DIFFS], ["status", STATS]].map(([name, opts]) => (
                         <div key={name}>
-                            <label className="label capitalize text-slate-700 font-medium">{name}</label>
+                            <label className="inline-block px-3 py-1 bg-slate-100 border-l-4 border-brand-500 text-xs font-black text-slate-900 mb-2 uppercase tracking-wide">{name}</label>
                             <select name={name} value={form[name]} onChange={handleChange}
                                 className="input w-full mt-1 focus:ring-2 focus:ring-brand-500">
                                 {opts.map(o => <option key={o} value={o}>{o}</option>)}
@@ -58,7 +58,7 @@ const EditProblemModal = ({ problem, onClose, onSave }) => {
                         </div>
                     ))}
                     <div className="md:col-span-2">
-                        <label className="label text-slate-700 font-medium">Personal Notes</label>
+                        <label className="inline-block px-3 py-1 bg-slate-100 border-l-4 border-brand-500 text-sm font-black text-slate-900 mb-2 uppercase tracking-wide">Personal Notes</label>
                         <textarea name="notes" value={form.notes} onChange={handleChange} rows={3}
                             className="input w-full mt-1 focus:ring-2 focus:ring-brand-500" placeholder="Approach, edge cases, or optimizations..." />
                     </div>
