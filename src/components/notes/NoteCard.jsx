@@ -17,10 +17,16 @@ const NoteCard = ({ note, onDelete }) => {
             addToast("File link unavailable. This note might have been uploaded before the view feature was enabled.", "error");
             return;
         }
-
-
         const fileName = note.filePath.split(/[/\\]/).pop();
-        const fileUrl = `http://localhost:5050/uploads/${fileName}`;
+        const apiUrl = import.meta.env.VITE_API_URL;
+        if (!apiUrl) {
+            addToast("File link unavailable. The API URL is not configured.", "error");
+            return;
+        }
+
+        const fileUrl = /^https?:\/\//.test(note.filePath)
+            ? note.filePath
+            : new URL(`/uploads/${encodeURIComponent(fileName)}`, apiUrl).toString();
 
         window.open(fileUrl, "_blank", "noopener,noreferrer")
     }
